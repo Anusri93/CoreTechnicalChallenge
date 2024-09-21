@@ -2,41 +2,38 @@ package com.challenge.service.impl;
 
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.logging.Level;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
-import com.challenge.controller.ChallengeController;
-//import com.challenge.service.Calendar;
 import com.challenge.service.SchedulerService;
 
 @Component
 public class SchedulerImpl implements SchedulerService {
 
-	private static final Logger logCommon = LogManager.getLogger("commons-log");
-	private static final Logger logAnalytics = LogManager.getLogger("analytics-log");
+	//private static final Logger logCommon = LogManager.getLogger("commons-log");
+	//private static final Logger logAnalytics = LogManager.getLogger("analytics-log");
+	static java.util.logging.Logger stdLogger = java.util.logging.Logger.getLogger(SchedulerImpl.class.getName());
 
 	@Override
-	@Scheduled(cron = "* * * * * *")
+	@Scheduled(cron = "*/60 * * * * *")
 	public void currentUniqueRequestsCount() {
-		logAnalytics.info("-------------------------- Scheduler started --------------------------");
-		logAnalytics.info("Current minute", currentMinute());
+		stdLogger.log(Level.INFO,"Current minute", currentMinute());
 		
 		for(Map.Entry<Integer,Integer> entry : mapSynchedReqCountPerMin.entrySet()) {
 			Integer key = entry.getKey();
 			Integer value = entry.getValue();
-			logAnalytics.info(key + " => " + value);
+			stdLogger.info(key + " => " + value);
 		}
-		logAnalytics.info("-------------------------- Scheduler Ended --------------------------");
 		
 	}
 
 	@Override
 	public void updateUniqueRequestsCount(Integer requestId) {
 		// TODO Auto-generated method stub/
-		logCommon.info("Calling updateUniqueRequestsCount method");
+		stdLogger.info("Calling updateUniqueRequestsCount method");
 		if(requestId != null && mapSynchedReqCountPerMin != null) {
 			Integer value =  mapSynchedReqCountPerMin.get(requestId);
 			synchronized (mapSynchedReqCountPerMin) {
