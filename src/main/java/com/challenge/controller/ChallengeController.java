@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,13 +36,15 @@ public class ChallengeController {
 	     	if(schedulerService != null) {
 	     		schedulerService.updateUniqueRequestsCount(reqId);
 	     		schedulerService.currentUniqueRequestsCount();
+	     		schedulerService.countUniqueRequestsPerMinute(reqId);
+	     		schedulerService.writeFile();
 
 	     		return ResponseEntity.ok("Ok");
 	     	}
 	     	return ResponseEntity.ok("failed");
 	    }  
 	 
-	 @PostMapping(value = "/api/verve/accept", consumes= "application/json") 
+	 @PostMapping(value = "/api/verve/accept", consumes= MediaType.APPLICATION_JSON_VALUE) 
 	    public ResponseEntity<String> getResponseUsingPost(@RequestParam Request req) throws InterruptedException, ExecutionException {
 	     	logger.info("Request Id: "+req.getId());
 	     	schedulerService  = new SchedulerImpl();

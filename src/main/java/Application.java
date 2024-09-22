@@ -13,7 +13,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @ComponentScan(basePackages = {"com.challenge.*"})
 @EnableScheduling
 public class Application {
-	private static final Logger logger = LogManager.getLogger("commons-log");
 	
 	public static void main(String[] args) {
 		ApplicationContext ctx = SpringApplication.run(Application.class, args);
