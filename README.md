@@ -28,4 +28,4 @@ This project is building a Java application with REST service
 •	0.2 - LoadBalancer changes 
 •	0.1 - Initial Release
 # License
-•	This project is licensed under the [Anusha Ramanan]
+•	This project is licensed under the [Anusri]
